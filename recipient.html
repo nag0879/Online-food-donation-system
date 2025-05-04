@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+    <h1>Find Food Near You</h1>
+    <p style="font-style: italic;">Because a shared meal feeds the heart too 💚</p>
+</div>
+
+<!-- Search Form -->
+<div class="card search-card">
+    <h2>Search for Food Donations</h2>
+    <form method="POST" action="{{ url_for('recipient') }}">
+        <div class="form-group">
+            <label for="quantity_needed">Number of People to Feed</label>
+            <input type="number" name="quantity_needed" id="quantity_needed" class="form-control" min="1" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Your Current Location</label>
+            <input type="text" name="address" id="address" class="form-control" value="{{ user.address }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Search Now</button>
+    </form>
+</div>
+
+<!-- Available Listings -->
+{% if listings %}
+<div class="card listings-card">
+    <h2>Available Food Nearby</h2>
+    <div class="listings-grid">
+    {% for listing in listings %}
+        <div class="listing-item" style="border: 2px solid #38f9d7; padding: 20px; margin-bottom: 20px; border-radius: 15px; background: #f0fdf9;">
+            <h3 style="color:#2b7a78;">🍲 {{ listing.food_item }}</h3>
+            <p><strong>Feeds:</strong> {{ listing.quantity }} people</p>
+            <p><strong>Available Till:</strong> {{ listing.available_until.strftime('%d-%m-%Y %I:%M %p') }}</p>
+            <p><strong>Pickup Location:</strong> 
+                <a href="https://www.google.com/maps/search/?api=1&query={{ listing.latitude }},{{ listing.longitude }}"
+                   target="_blank"
+                   style="color:#0077b6; font-weight:bold; text-decoration: underline;">
+                    {{ listing.address }}
+                </a>
+            </p>
+            <p><strong>Contact:</strong> 
+                <a href="tel:{{ listing.contact_number }}" style="color:#ef476f; font-weight:bold;">📞 {{ listing.contact_number }}</a>
+            </p>
+
+            <form method="POST" action="{{ url_for('request_food', listing_id=listing.id) }}" style="margin-top:15px;">
+                <div class="form-group">
+                    <label for="quantity_requested_{{ listing.id }}">Quantity You Need</label>
+                    <input type="number" class="form-control" name="quantity_requested" id="quantity_requested_{{ listing.id }}" min="1" max="{{ listing.quantity }}" required>
+                </div>
+                <button type="submit" class="btn btn-success" style="width:100%; margin-top:10px;">Request Food</button>
+            </form>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Your Requests -->
+{% if requests %}
+<div class="card" style="margin-top:30px;">
+    <h2>Your Food Requests</h2>
+    {% for item in requests %}
+    <div class="food-item" style="border: 2px dashed #38f9d7; padding: 15px; margin-bottom: 15px; border-radius: 12px;">
+        <h4 style="color:#118ab2;">🍱 {{ item.listing.food_item }}</h4>
+        <!-- <p><strong>Status:</strong> 
+            {% if item.request.status == 'approved' %}
+                <span style="color:green;font-weight:bold;">Approved</span>
+            {% elif item.request.status == 'rejected' %}
+                <span style="color:red;font-weight:bold;">Rejected</span>
+            {% else %}
+                <span style="color:orange;font-weight:bold;">Pending</span>
+            {% endif %}
+        </p> -->
+        <p><strong>Pickup Location:</strong> 
+            <a href="https://www.google.com/maps/search/?api=1&query={{ item.listing.latitude }},{{ item.listing.longitude }}"
+               target="_blank"
+               style="color:#0077b6; font-weight:bold; text-decoration: underline;">
+               {{ item.listing.address }}
+            </a>
+        </p>
+        <p><strong>Contact:</strong> 
+            <a href="tel:{{ item.listing.contact_number }}" style="color:#ef476f; font-weight:bold;">📞 {{ item.listing.contact_number }}</a>
+        </p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Inspirational Food Quote -->
+<div class="quote-box">
+    <div class="quote-text">"{{ quotes }}"</div>
+</div>
+
+{% endblock %}

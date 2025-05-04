@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero" style="padding: 100px 20px;">
+    <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">Community Food Sharing</h1>
+    <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 30px;">Where generosity meets need in your neighborhood</p>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <a href="{{ url_for('donor') }}" class="btn" style="padding: 15px 30px; font-size: 1.1rem;">I Want to Donate Food</a>
+        <a href="{{ url_for('recipient') }}" class="btn btn-secondary" style="padding: 15px 30px; font-size: 1.1rem;">I Need Food</a>
+    </div>
+</div>
+
+<div class="card" style="text-align: center; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);">
+    <h2 style="color: var(--secondary); margin-bottom: 30px;">Make a Difference Today</h2>
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <div style="width: 80px; height: 80px; background: linear-gradient(to right, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 2rem;">🍎</div>
+            <h3>Reduce Waste</h3>
+            <p>Share your excess food instead of throwing it away</p>
+        </div>
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <div style="width: 80px; height: 80px; background: linear-gradient(to right, var(--accent), #3f37c9); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 2rem;">❤️</div>
+            <h3>Help Others</h3>
+            <p>Support community members facing food insecurity</p>
+        </div>
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <div style="width: 80px; height: 80px; background: linear-gradient(to right, var(--success), #2ecc71); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 2rem;">🤝</div>
+            <h3>Build Community</h3>
+            <p>Connect with neighbors and strengthen local bonds</p>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="background: linear-gradient(-45deg, #f8f9fa, #e9ecef); text-align: center;">
+    <h2 style="color: var(--secondary); margin-bottom: 20px;">Recent Success Stories</h2>
+    <div style="display: flex; overflow-x: auto; gap: 20px; padding: 20px 0; scroll-snap-type: x mandatory;">
+        <div style="flex: 0 0 300px; scroll-snap-align: start; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <p>"This platform helped me share my extra garden produce with families who really needed it. So rewarding!"</p>
+            <p style="font-weight: 600; margin-top: 15px;">- Sarah, Donor</p>
+        </div>
+        <div style="flex: 0 0 300px; scroll-snap-align: start; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <p>"As a single parent, the food I received helped me through a tough month. Thank you!"</p>
+            <p style="font-weight: 600; margin-top: 15px;">- Michael, Recipient</p>
+        </div>
+        <div style="flex: 0 0 300px; scroll-snap-align: start; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <p>"Our restaurant now donates excess food daily. It's easy and makes a real difference."</p>
+            <p style="font-weight: 600; margin-top: 15px;">- The Green Cafe</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

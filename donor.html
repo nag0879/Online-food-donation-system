@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <h1>Donate Food</h1>
+    <p>Your small act can fill many hearts ❤️</p>
+</div>
+
+<div class="card">
+    <h2>Share Your Food</h2>
+    <form method="POST" action="{{ url_for('donor') }}">
+        <div class="form-group">
+            <label>Food Item</label>
+            <input type="text" name="food_item" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Quantity (number of people it can feed)</label>
+            <input type="number" name="quantity" class="form-control" required min="1">
+        </div>
+        <div class="form-group">
+            <label>Pickup Location</label>
+            <input type="text" name="address" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Available for (hours)</label>
+            <input type="number" name="available_hours" class="form-control" required min="1" max="24">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Donate Now</button>
+    </form>
+</div>
+
+{% if requests %}
+<div class="card">
+    <h2>Pending Food Requests</h2>
+    {% for request in requests %}
+    <div class="food-item">
+        <h4>{{ request.food_listing.food_item }}</h4>
+        <div class="food-meta">
+            <span>Requested by Recipient #{{ request.recipient_id }}</span>
+            <span>Location: {{ request.food_listing.address }}</span>
+        </div>
+        <form method="POST" action="{{ url_for('respond_request', request_id=request.id, response='approve') }}">
+            <button type="submit" class="btn btn-success">Approve</button>
+        </form>
+        <form method="POST" action="{{ url_for('respond_request', request_id=request.id, response='reject') }}">
+            <button type="submit" class="btn btn-danger" style="margin-top:5px;">Reject</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="quote-box">
+    <div class="quote-text">"{{ quotes }}"</div>
+</div>
+
+{% endblock %}
